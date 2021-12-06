@@ -1,9 +1,9 @@
 function Message(props){
     return(
-        <div>
+        <div className="message">
             <div>{props.message.user}</div>
-            <div>{props.message.content}</div>
-            <span>{props.message.time}</span>
+            <span>{props.message.content} </span>
+            <span>{props.message.date}</span>
         </div>
     )
 }

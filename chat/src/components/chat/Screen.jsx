@@ -1,19 +1,17 @@
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Message from "./Message";
+import {Context} from "./Chat"
 
-function Screen(props){
+function Screen(){
 
-    const [messageArray, setMessageArray] = useState([])
+    const data = useContext(Context);
 
-    function newMessage(){
-        //get from api
-        // setMessageArray(data)
-    }
 
-    function createMessage(){
-
-        const allMessage = messageArray.map((message)=>{
-          return <Message key={message.time} message={message}/>
+    function createMessage(data){
+        console.table(data[0]);
+        const allMessage = data.map((message)=>{ 
+            const objMessage =JSON.parse(message)
+            return <Message key={objMessage.date} message={objMessage}/>
             })
             return allMessage;
     }
@@ -21,20 +19,9 @@ function Screen(props){
 
     return(
         <div className="container">
-           {createMessage()}
+           {createMessage(data)}
         </div>
     )
 }
-
-const message1= [{
-    "user" : "shelly",
-    "content": "haha",
-    "time" : 12
-},{
-    "user" : "shselly",
-    "content": "hasha",
-    "time" : 122
-}
-]
 
 export default Screen;

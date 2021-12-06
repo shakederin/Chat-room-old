@@ -1,39 +1,43 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import RadioBtn from "./RadioBtn";
 import {Link} from "react-router-dom";
+import { user } from "../../App";
 
-function Login(){
 
-    const [userName, setuserName] = useState(null);
-    const [gender, setGender] = useState(null);
+function Login(props){
+
     const [link, setLink] = useState("/login");
+
+    const UserName = useContext(user)
 
     const input = useRef(null);
     const button = useRef(null);
 
     useEffect(()=>{
+        if(link==="/login"){
         button.current.click();
+        }
     },[link])
 
     function submit(){
-       if(gender===null || userName===null){
-           console.log("error");
-           return;
-       }
-       setLink("/")
-
+        if(input.current.value===null){
+            console.log("error");
+            return;
+        }
+        UserName.setUserName(input.current.value)
+        setLink("/chat")
     }
 
     return(
         <div className="container">
             <h2>Live Chat</h2>
-            <input onKeyUp={()=>{setuserName(input.current.value)}} ref={input} type="text" placeholder="User Name"/>
-            <form>
+            <input  ref={input} type="text" placeholder="User Name"/>
+            {/* <form>
                 <p>Select Gender</p>
                 <RadioBtn setGender={setGender}  gender="Male"/>
                 <RadioBtn setGender={setGender}  gender="Female"/>
                 <RadioBtn setGender={setGender}  gender="Other"/>
-            </form>
+            </form> */}
             <Link to={link}>
                 <button ref={button} onClick={()=>{submit()}}>Log In</button>
             </Link>
